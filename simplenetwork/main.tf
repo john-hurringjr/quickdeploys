@@ -112,7 +112,7 @@ module "on_prem_vpc_firewall_allow_rfc1918_all" {
 /******************************************
   Set Up Cloud NAT
  *****************************************/
-module "on_prem_cloud_nat_region_1" {
+module "cloud_nat_region_1" {
   source                  = "github.com/john-hurringjr/test-modules/networking/nat/auto-ip-all-region-subnets"
   project_id              = var.project_id
   network_self_link       = google_compute_network.vpc.self_link
@@ -121,7 +121,7 @@ module "on_prem_cloud_nat_region_1" {
   nat_region              = var.region_1
 }
 
-module "on_prem_cloud_nat_region_2" {
+module "cloud_nat_region_2" {
   source                  = "github.com/john-hurringjr/test-modules/networking/nat/auto-ip-all-region-subnets"
   project_id              = var.project_id
   network_self_link       = google_compute_network.vpc.self_link
