@@ -129,22 +129,3 @@ module "on_prem_cloud_nat_region_2" {
   cloud_router_asn_number = var.region_2_router_asn
   nat_region              = var.region_2
 }
-
-/******************************************
-  Set Up Firewall Rules
- *****************************************/
-
-# Allows ingress on 22, 3389, 443 on all VMs from all rfc1918
-module "firewall_allow_ingress_rfc1918_limited" {
-  source            = "github.com/john-hurringjr/test-modules/networking/firewall-rules/all/allow-ingress-rfc1918-limited"
-  project_id        = var.project_id
-  network_self_link = google_compute_network.vpc.self_link
-  network_name      = google_compute_network.vpc.name
-}
-
-module "firewall_allow_iap_all" {
-  source            = "github.com/john-hurringjr/test-modules/networking/firewall-rules/all/allow-ingress-iap"
-  project_id        = var.project_id
-  network_self_link = google_compute_network.vpc.self_link
-  network_name      = google_compute_network.vpc.name
-}
