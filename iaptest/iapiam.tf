@@ -27,6 +27,7 @@ variable "accesslevel_id" {}
  *****************************************/
 
 resource "google_project_iam_member" "test_iap_condition" {
+  provider = "google-beta"
   member  = "user:${var.test_user_id}"
   role    = "roles/iap.tunnelResourceAccessor"
   condition {
