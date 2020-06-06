@@ -27,11 +27,6 @@ variable "sink_pubsub_topic_name" {
   description = "Name of PubSub topic for sink"
 }
 
-variable "sink_pubsub_subscription_name" {
-  type        = string
-  description = "Name of PubSub subscription to be subscribed to topic for sink"
-}
-
 variable "sink_name" {
   type        = string
   description = "Name of org sink"

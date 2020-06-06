@@ -47,7 +47,7 @@ resource "google_logging_organization_sink" "org_log_sink" {
   name              = var.sink_name
   org_id            = var.organization_id
   include_children  = true
-  filter            = "protoPayload.methodName:'SetIamPolicy'"
+  filter            = var.sink_filter
 }
 
 ///******************************************

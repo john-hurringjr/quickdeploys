@@ -34,11 +34,28 @@ variable "region_2" {
   default = "us-central1"
 }
 
-variable "sub_1_cidr" {
+variable "sub_1_primary_cidr" {
   default = "10.0.0.0/19"
 }
-variable "sub_2_cidr" {
+
+variable "sub_1_alias_pod_cidr" {
+  default = "172.16.0.0/19"
+}
+
+variable "sub_1_alias_services_cidr" {
+  default = "192.168.0.0/19"
+}
+
+variable "sub_2_primary_cidr" {
   default = "10.128.0.0/19"
+}
+
+variable "sub_2_alias_pod_cidr" {
+  default = "172.24.0.0/19"
+}
+
+variable "sub_2_alias_services_cidr" {
+  default = "192.168.128.0/19"
 }
 
 variable "vpc_flow_log_interval" {
@@ -70,29 +87,33 @@ resource "google_compute_network" "vpc" {
 }
 
 module "vpc_region_1_subnet" {
-  source                = "github.com/john-hurringjr/test-modules/networking/subnet/generic"
-  project_id            = var.project_id
-  network_self_link     = google_compute_network.vpc.self_link
-  network_name          = google_compute_network.vpc.name
-  region                = var.region_1
-  cidr                  = var.sub_1_cidr
-  vpc_flow_log_interval = var.vpc_flow_log_interval
-  vpc_flow_log_sampling = var.vpc_flow_log_sampling
-  subnet_number         = "1"
-  private_google_access = "false"
+  source                  = "github.com/john-hurringjr/test-modules/networking/subnet/gke"
+  project_id              = var.project_id
+  network_self_link       = google_compute_network.vpc.self_link
+  network_name            = google_compute_network.vpc.name
+  region                  = var.region_1
+  primary_cidr            = var.sub_1_primary_cidr
+  alias_gke_pod_cidr      = var.sub_1_alias_pod_cidr
+  alias_gke_service_cidr  = var.sub_1_alias_services_cidr
+  vpc_flow_log_interval   = var.vpc_flow_log_interval
+  vpc_flow_log_sampling   = var.vpc_flow_log_sampling
+  subnet_number           = "1"
+  private_google_access   = "false"
 }
 
 module "vpc_region_2_subnet" {
-  source                = "github.com/john-hurringjr/test-modules/networking/subnet/generic"
-  project_id            = var.project_id
-  network_self_link     = google_compute_network.vpc.self_link
-  network_name          = google_compute_network.vpc.name
-  region                = var.region_2
-  cidr                  = var.sub_2_cidr
-  vpc_flow_log_interval = var.vpc_flow_log_interval
-  vpc_flow_log_sampling = var.vpc_flow_log_sampling
-  subnet_number         = "1"
-  private_google_access = "false"
+  source                  = "github.com/john-hurringjr/test-modules/networking/subnet/gke"
+  project_id              = var.project_id
+  network_self_link       = google_compute_network.vpc.self_link
+  network_name            = google_compute_network.vpc.name
+  region                  = var.region_2
+  primary_                = var.sub_2_primary_cidr
+  alias_gke_pod_cidr      = var.sub_2_alias_pod_cidr
+  alias_gke_service_cidr  = var.sub_2_alias_services_cidr
+  vpc_flow_log_interval   = var.vpc_flow_log_interval
+  vpc_flow_log_sampling   = var.vpc_flow_log_sampling
+  subnet_number           = "1"
+  private_google_access   = "false"
 }
 
 module "vpc_firewall_allow_iap_all" {
