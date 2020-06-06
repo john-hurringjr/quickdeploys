@@ -26,9 +26,9 @@ variable "accesslevel_id" {}
   Set IAM Policy
  *****************************************/
 
-resource "google_project_iam_member" "test_iap_condition" {
+resource "google_project_iam_binding" "test_iap_condition" {
   provider = "google-beta"
-  member  = "user:${var.test_user_id}"
+  members  = ["user:${var.test_user_id}",]
   role    = "roles/iap.tunnelResourceAccessor"
   condition {
     expression  = "'accessPolicies/${var.accesspolicy_number}/accessLevels/${var.accesslevel_id}' in request.auth.access_levels"
