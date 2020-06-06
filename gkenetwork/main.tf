@@ -25,7 +25,7 @@ variable "project_id" {}
  *****************************************/
 
 variable "vpc_name" {
-  default = "simple-vpc"
+  default = "gke-vpc"
 }
 variable "region_1" {
   default = "us-east4"
