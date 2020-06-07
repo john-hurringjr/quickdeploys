@@ -107,7 +107,7 @@ module "vpc_region_2_subnet" {
   network_self_link       = google_compute_network.vpc.self_link
   network_name            = google_compute_network.vpc.name
   region                  = var.region_2
-  primary_                = var.sub_2_primary_cidr
+  primary_cidr            = var.sub_2_primary_cidr
   alias_gke_pod_cidr      = var.sub_2_alias_pod_cidr
   alias_gke_service_cidr  = var.sub_2_alias_services_cidr
   vpc_flow_log_interval   = var.vpc_flow_log_interval
