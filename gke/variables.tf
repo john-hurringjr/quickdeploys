@@ -25,3 +25,4 @@ variable "username" {}
 variable "password" {}
 variable "project_id" {}
 variable "master_cidr" {}
+variable "master_authorized_cidrs" {}

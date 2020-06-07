@@ -27,6 +27,12 @@ resource "google_container_cluster" "test_cluster" {
   subnetwork                = var.subnet_self_link
   initial_node_count        = 1
 
+  master_authorized_networks_config {
+    cidr_blocks {
+      cidr_block = var.master_authorized_cidrs
+    }
+  }
+
   private_cluster_config {
     enable_private_endpoint = true
     enable_private_nodes    = true
