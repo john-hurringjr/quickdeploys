@@ -24,3 +24,4 @@ variable "services_secondary_range_name" {}
 variable "username" {}
 variable "password" {}
 variable "project_id" {}
+variable "master_cidr" {}

@@ -30,6 +30,7 @@ resource "google_container_cluster" "test_cluster" {
   private_cluster_config {
     enable_private_endpoint = true
     enable_private_nodes    = true
+    master_ipv4_cidr_block  = var.master_cidr
   }
 
   ip_allocation_policy {
