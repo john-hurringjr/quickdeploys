@@ -23,3 +23,4 @@ variable "cluster_secondary_range_name" {}
 variable "services_secondary_range_name" {}
 variable "username" {}
 variable "password" {}
+variable "project_id" {}
