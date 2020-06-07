@@ -18,6 +18,7 @@
  *****************************************/
 
 resource "google_container_cluster" "test_cluster" {
+  provider                  = "google-beta"
   name                      = "test-gke-cluster"
   location                  = "us-central1"
   remove_default_node_pool  = true
