@@ -21,7 +21,5 @@ variable "network_self_link" {}
 variable "subnet_self_link" {}
 variable "cluster_secondary_range_name" {}
 variable "services_secondary_range_name" {}
-variable "cluster_ipv4_cidr_block" {}
-variable "services_ipv4_cidr_block" {}
 variable "username" {}
 variable "password" {}
