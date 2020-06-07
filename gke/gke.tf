@@ -29,6 +29,7 @@ resource "google_container_cluster" "test_cluster" {
 
   private_cluster_config {
     enable_private_endpoint = true
+    enable_private_nodes    = true
   }
 
   ip_allocation_policy {
