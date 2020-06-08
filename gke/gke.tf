@@ -14,14 +14,14 @@
  */
 
 /******************************************
-  GKE
+  GKE - Cluster
  *****************************************/
 
 resource "google_container_cluster" "test_cluster" {
   provider                  = google-beta
   project                   = var.project_id
   name                      = "test-gke-cluster"
-  location                  = "us-central1"
+  location                  = var.location
   remove_default_node_pool  = true
   network                   = var.network_self_link
   subnetwork                = var.subnet_self_link
@@ -56,6 +56,53 @@ resource "google_container_cluster" "test_cluster" {
     istio_config {
       disabled = false
     }
+  }
+
+}
+
+/******************************************
+  GKE - Node Pool - 1 - Service Account
+ *****************************************/
+
+resource "google_service_account" "gke_node_pool_1_service_account" {
+  project     = var.project_id
+  account_id  = "gke-node-pool-1"
+}
+
+/******************************************
+  GKE - Node Pool - 1
+ *****************************************/
+
+resource "google_container_node_pool" "test_node_pool_1" {
+  project = var.project_id
+  location = var.location
+  cluster = google_container_cluster.test_cluster.name
+  node_count = 1
+
+  autoscaling {
+    max_node_count = 5
+    min_node_count = 1
+  }
+
+  upgrade_settings {
+    max_surge       = 2
+    max_unavailable = 2
+  }
+
+  management {
+    auto_repair   = true
+    auto_upgrade  = true
+  }
+
+  node_config {
+    disk_size_gb  = 25
+    disk_type     = "pd-ssd"
+    machine_type  = "n1-standard-2"
+    labels = {
+      node-pool = "test-node-pool-1"
+    }
+    service_account = google_service_account.gke_node_pool_1_service_account.email
+
   }
 
 }
