@@ -98,7 +98,6 @@ module "vpc_region_1_subnet" {
   vpc_flow_log_interval   = var.vpc_flow_log_interval
   vpc_flow_log_sampling   = var.vpc_flow_log_sampling
   subnet_number           = "1"
-  private_google_access   = "false"
 }
 
 module "vpc_region_2_subnet" {
@@ -113,7 +112,6 @@ module "vpc_region_2_subnet" {
   vpc_flow_log_interval   = var.vpc_flow_log_interval
   vpc_flow_log_sampling   = var.vpc_flow_log_sampling
   subnet_number           = "1"
-  private_google_access   = "false"
 }
 
 module "vpc_firewall_allow_iap_all" {
