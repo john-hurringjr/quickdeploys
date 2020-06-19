@@ -77,10 +77,10 @@ resource "google_container_node_pool" "test_node_pool_1" {
   project = var.project_id
   location = var.location
   cluster = google_container_cluster.test_cluster.name
-  node_count = 1
+  node_count = 2
 
   autoscaling {
-    max_node_count = 5
+    max_node_count = 6
     min_node_count = 1
   }
 
