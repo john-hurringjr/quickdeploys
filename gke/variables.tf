@@ -27,3 +27,4 @@ variable "project_id" {}
 variable "master_cidr" {}
 variable "master_authorized_cidrs" {}
 variable "location" {}
+variable "gitlab_reg_token" {}

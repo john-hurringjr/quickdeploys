@@ -26,6 +26,11 @@ resource "google_container_cluster" "test_cluster" {
   network                   = var.network_self_link
   subnetwork                = var.subnet_self_link
   initial_node_count        = 1
+  networking_mode           = "VPC_NATIVE"
+
+  default_snat_status {
+    disabled = true
+  }
 
   master_authorized_networks_config {
     cidr_blocks {
@@ -105,4 +110,36 @@ resource "google_container_node_pool" "test_node_pool_1" {
 
   }
 
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = "https://${google_container_cluster.test_cluster.endpoint}"
+    token                  = data.google_client_config.default.access_token
+    cluster_ca_certificate = base64decode(google_container_cluster.test_cluster.)
+  }
+}
+
+resource "helm_release" "example" {
+  name       = "gitlab-runner"
+  repository = "https://charts.gitlab.io"
+  chart      = "gitlab-runner"
+
+  values = [
+    file("values.yaml")
+  ]
+
+  set {
+    name  = "runnerRegistrationToken"
+    value = var.gitlab_reg_token
+  }
+}
+
+data "google_client_config" "default" {}
+
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = "https://${google_container_cluster.test_cluster.endpoint}"
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(google_container_cluster.test_cluster.master_auth.0.cluster_ca_certificate)
 }
