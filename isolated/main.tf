@@ -165,6 +165,10 @@ resource "google_compute_instance" "temp_instance" {
     }
   }
 
+  metadata = {
+    enable-oslogin = true
+  }
+
   scheduling {
     on_host_maintenance = "MIGRATE"
   }
